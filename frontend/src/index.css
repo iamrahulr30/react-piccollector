@@ -1,0 +1,189 @@
+
+body {
+  --tw-bg-opacity: 1;
+  background-color: rgb(18 24 27 / var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: rgb(248 248 248 / var(--tw-text-opacity));
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* navbar */
+header.topg{
+  /* background-color: rgba(112, 114, 119, 0.201); */
+  justify-content: space-between;
+  display: flex;
+  max-width: 1400px;
+  max-height: 70px;
+  margin: 10px;
+
+}
+/* div.container { 
+  margin: auto 10px;
+} */
+nav{
+  display: flex ;
+  align-items: center;
+}
+
+nav a{
+  margin-right: 15px;
+  text-decoration: none;
+  color : inherit;
+}
+
+nav a:hover {
+  transform: scale(1.08);
+}
+
+
+/* pics */
+.home {
+  /* background-color: rgba(240, 236, 231, 0.304); */
+  display: grid;
+  grid-template-columns: 3fr 0.9fr;
+
+}
+
+.pics{
+  margin: 1rem;
+  display: grid;
+  gap : 1rem;
+  grid-template-columns: repeat( auto-fit , minmax( 200px , 1fr )) ;
+  grid-auto-rows: 260px ;
+}
+
+.pic-detials{
+  background-color: rgb(104 98 97);
+  margin: 0.1rem;
+  background-position:center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 0.2rem;
+  color: transparent;
+  transition: all 500ms;
+  display: flex;
+  flex-direction: column;
+  align-content: space-between;
+  justify-content: space-between;
+}
+
+.pic-detials:hover{
+  transform: scale(1.08);
+  background-blend-mode:multiply;
+  color: rgb(248 248 248 / 1 );
+}
+
+.img-title{ 
+  transition: all 200ms;
+  display: flex;
+  justify-content: center;
+}
+
+.img-lower{
+  display: flex;
+  justify-content: right;
+}
+
+.img-lower > div {
+  margin:15px;
+  padding: 5px 10px;
+  border-radius: 4px;
+  background-color: rgba(111, 112, 112, 0.552);
+  opacity: 0;
+}
+
+.pic-detials:hover .img-lower > div { 
+  opacity: 1;
+}
+
+.pic-detials:hover div.heartson {
+  color: red;
+}
+
+.img-lower > div:hover {
+  transform: scale(1.3);
+}
+
+
+
+/* Medium screens */
+@media screen and (min-width: 600px) {
+  .card-tall {
+    grid-row: span 2 / auto;
+  }
+
+  .card-wide {
+    grid-column: span 2/ auto;
+  }
+}
+
+/* forms */
+form{
+  display: flex;
+  flex-direction: column;
+  margin-top: 15px;
+}
+form > h3{
+  display: flex;
+  margin: 20px;
+  justify-content: center;
+}
+
+form > input {
+  border-radius: 4px;
+  padding: 12px;
+  margin-top: 2px;
+  outline: none;
+  background-color: rgba(55, 53, 53, 0.733);
+  color : rgb(248 248 248 / 1 ) ; 
+  border: none;
+}
+
+/* input[type=text] {
+  background-color: #3CBC8D;
+  color: white;
+} */
+
+input[type=button], input[type=submit], input[type=reset]{
+  background-color:  rgba(55, 53, 53, 0.733);
+}
+
+input[type="file"]::file-selector-button {
+  background-color: rgba(33, 24, 24, 0.733);
+  color: aliceblue ;
+  padding: 6px;
+  margin-right: 10px;
+  border-radius: 4px;
+  border: none;
+}
+
+button {
+  background-color: rgba(33, 24, 24, 0.733);
+  color: aliceblue ;
+  padding: 6px;
+  margin-right: 10px;
+  border-radius: 4px;
+}
+
+button:hover {
+  color :greenyellow;
+  border: 1px solid greenyellow;
+}
+
+
+div.form-container {
+  margin: 0 25%;
+  min-width: 40%;
+  padding: 10px;
+  max-width: fit-content;
+}
+
+.topage{
+  color: aliceblue;
+  text-decoration: none;
+  margin-top: 10px;
+}

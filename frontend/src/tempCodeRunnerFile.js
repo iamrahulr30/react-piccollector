@@ -1,0 +1,3 @@
+<Route path = "/"
+              element = {<Home />}
+              />
