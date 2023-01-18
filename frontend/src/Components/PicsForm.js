@@ -2,12 +2,14 @@ import React , { useState } from "react"
 import  axios from "axios"
 import uuid from 'react-uuid'
 import { usePicsContext } from "../Hooks/usePicContext"
+import { useAuthContext } from "../Hooks/useAuthContext"
 
 // const axios = require('axios');
 
 export const PicsForm = () => {
 
     const { dispatch } = usePicsContext()
+    const { user } = useAuthContext()
 
 
     const [ title , setTitle ] = useState("")
@@ -22,39 +24,47 @@ export const PicsForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        // const formData = new FormData()
-
-        // formData.append("image" , picUp )
-        // formData.append("title" , title )
-        // formData.append("description" , des )
-
+        
+        // console.log(formData)
 
         // console.log(formData)
 
-
+        // const data = { title , Path : "none"  , body : des }
         // const response = await fetch("/api/pics", {
         //     method : "POST",
-        //     body : JSON.stringify(formData),
+        //     body : JSON.stringify(data),
         //     headers : {
         //         "Content-Type" : "multipart/form-data",
         //         'Authorization' : `Bearer ${user.token}`
         //     }
         // })
         // const jsonInp = JSON.stringify(picpick)
+        // {
+        //     "Content-Type" : "multipart/form-data",
+        //     'Authorization' : `Bearer ${user.token}`
+        // }
+        // const Path = uuid()
+        // console.log(Path)
 
-        const Path = uuid()
-        console.log(Path)
-        const response = await axios.post("/api/pics", {
-            title , Path , body : des
-            } , 
-            {
-                "Content-Type" : "multipart/form-data",
-                // 'Authorization' : `Bearer ${user.token}`
-            })
+        // aws
+        const formData = new FormData()
+
+        formData.append("image" , picUp )
+        formData.append("title" , title )
+        formData.append("body" , des )
+
+        const headers = {
+            'Content-Type': "multipart/form-data",
+            'Authorization' : `Bearer ${user.token}`
+        }
+        
+        const response = await axios.post("/api/pics", formData  ,{ 
+            headers : headers })
 
         
         if(response){
             const json =  await response
+            console.log(json)
             dispatch({ type : "CREATE_PICS" , payload : json })
             console.log(json.data)
         }
@@ -86,6 +96,7 @@ export const PicsForm = () => {
                 type="file" 
                 onChange={(e) => setPicUp(e.target.files[0])} 
                 name="image"
+                // value=""
                 // setPicUp(e.target.files[0])
                 // value={picUp}
                 // className={emptyFields.includes("title") ? "error" : ""}
@@ -105,3 +116,4 @@ export const PicsForm = () => {
         </div>
     )
 }
+

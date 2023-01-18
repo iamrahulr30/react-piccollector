@@ -5,35 +5,37 @@ export const Profile = () => {
 
     const { user } = useAuthContext()
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        const fetchUser = async () => {
-            const response = await fetch("/api/user/profile",
-            {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ user })
-            })
+    //     const fetchUser = async () => {
+    //         const response = await fetch("/api/user/profile",
+    //         {
+    //             method: 'POST',
+    //             headers: {'Content-Type': 'application/json'},
+    //             body: JSON.stringify({ user })
+    //         })
 
-            const json = await response.json()
+    //         const json = await response.json()
 
-            if(response.ok) {
-                console.log("user data returned",json)
-            }
+    //         if(response.ok) {
+    //             console.log("user data returned",json)
+    //         }
 
-            if (!response.ok) {
-                console.log("fetch problem try again")
-            }
+    //         if (!response.ok) {
+    //             console.log("fetch problem try again")
+    //         }
 
-        }
+    //     }
 
-        fetchUser()
-    }, [] )
+    //     fetchUser()
+    // }, [] )
 
-    console.log(user.email)
+    console.log(user.email , user.meta)
     return (
         <div className="form-container">
             { user.email }
+            { user.meta.hearts }
+            { user.meta.downloads }
             <form action="" className="signup">
                 <h3>Profile</h3>
 

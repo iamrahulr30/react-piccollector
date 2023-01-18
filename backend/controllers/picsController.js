@@ -1,14 +1,20 @@
 const { mongoose } = require("mongoose")
 const Pic = require("../models/picsModel")
+const { uploadFile , getPicUrl } = require("../s3")
+const crypto = require("crypto")
 
-
-
-
+let counter = 0
 //get all pics
 const getPics = async (req, res) => {
     
-    const pics = await Pic.find().sort({ createdAt : -1 })
+    const pics = await Pic.find().sort({ createdAt : -1 }).lean()
 
+    for (let pic of pics){
+        counter = counter + 1
+        const imageUrl = await getPicUrl(pic.Path)
+        pic.imageUrl = imageUrl
+    }
+    console.log("get count : " , counter)
     return res.status(200).json(pics)
 }
 
@@ -39,26 +45,18 @@ const getPic = async (req, res) => {
 //upload
 const uploadPic = async (req, res) => {
 
-    // const { title , path  } = req.body
-
-    // if (!title || !path) {
-    //     return res.status(404).json({ error : "title and path field is necessary"})
-    // }
-    // try{
-    //     console.log("new upload")
-    //     const file = req.file
-    //     console.log(" file : " , file )
-    // } catch (e) { 
-    //     console.log("error")
-    //     console.log(e)}
-
-    // // console.log({ ...req.body.form })
-    // return res.status(200).json({ body : "this is fun"})
+    const path = crypto.randomUUID()
 
     try{
-        const pic = await Pic.create({...req.body})
+        const result = await uploadFile({ ...req.file , path })
+        const imageurl = await getPicUrl(path)
+        const upload_pic = await Pic.create({...req.body , Path : path})
+        const pic = {...upload_pic }
+        pic.imageUrl = imageurl
+        console.log("pic " , pic)
         return res.status(200).json(pic)
     } catch (error) {
+        console.log('error' , error )
         return res.status(400).json({ error })
     }
 }

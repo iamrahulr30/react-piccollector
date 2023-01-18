@@ -1,6 +1,7 @@
 require("dotenv").config()
 const express = require("express")
 const mongoose = require("mongoose")
+const cors = require("cors")
 
 const picRoutes = require("./routes/pics")
 const userRoutes = require("./routes/user")
@@ -8,6 +9,12 @@ const userRoutes = require("./routes/user")
 
 
 const app = express()
+
+app.use(
+    cors({
+        origin : "http://localhost:3000",
+    })
+)
 
 
 //multer

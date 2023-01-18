@@ -2,8 +2,7 @@ import React from "react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowDown , faHeart } from '@fortawesome/free-solid-svg-icons'
 export const PicDetials = ({ pic }) => {
-
-
+    
     function pickRand(){
         const array = [
             'https://images.unsplash.com/photo-1558981359-219d6364c9c8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2100&q=80',
@@ -24,20 +23,50 @@ export const PicDetials = ({ pic }) => {
 
     function pushClasses(){
         const classes = ["card-tall  card-wide" , "card-tall" , "card-wide",""]
+        // const classes = ["card-wide"," "]
         return classes[Math.floor(Math.random() * classes.length)]
     }
 
-    function downImg(e){
+    function downloadImg(e){
+        e.preventDefault()
         const file = e.currentTarget.parentNode.parentNode.style.backgroundImage.slice(5,-2)
-        console.log(file)
-
+        // const file = 'https://images.unsplash.com/photo-1583426573939-97d09302d76a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=968&q=80'
     
-    }
+        fetch(file, {
+            method: 'GET',
+            headers: {
+            'Content-Type': "multipart/form-data",
+            },
+        })
+        .then((response) => {
+            response.blob()
+            console.log("response : " ,response)
+        })
+        .then((blob) => {
+            // Create blob link to download
+            const url = window.URL.createObjectURL(
+            new Blob([blob]))
+            console.log("url : " , url)
+        
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute(
+            'download',
+            `FileName.jpeg`,
+            );
+
+            document.body.appendChild(link);
+            link.click();
+            link.parentNode.removeChild(link);
+            })
+    }  
+
 
     return (
         <div 
             className={ `pic-detials ${ pushClasses ()}`} 
-            style={{ backgroundImage : `url(${ pickRand() })` }} 
+            style={{ backgroundImage : `url(${pic.imageUrl
+                })` }} 
             download >
             {/* <p>{ pic.body }</p> */}
             <div className="img-title">
@@ -47,7 +76,7 @@ export const PicDetials = ({ pic }) => {
                 <div className="heartson">
                     <FontAwesomeIcon icon={ faHeart } />   
                 </div>
-                <div className="download" onClick={ downImg }>
+                <div className="download" onClick={ downloadImg }>
                     <FontAwesomeIcon icon={ faArrowDown } />
                 </div>
             </div>

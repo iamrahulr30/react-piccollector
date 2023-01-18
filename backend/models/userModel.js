@@ -13,8 +13,22 @@ const userSchema =  new Schema ({
     password : {
         type : String,
         required : true,
+    },
+    user_id : {
+        type:String,
+        required:true
+    },
+    meta : {
+        hearts : {
+        type : Array,
+        default : []
+        },
+        downloads : {
+        type : Array,
+        default : []
+        }
     }
-})
+}, { timestamps : true })
 
 userSchema.statics.signup = async function( email ,password ) {
 

@@ -16,12 +16,18 @@ const loginUser = async (req, res) => {
 
     // return res.status(200).json({ "msg" : "hiya"})
 
-    const { email , password } = req.body
+    const { email , password  } = req.body
 
     try { 
-        const user = await User.login(email , password)
+        const user = await User.login(email , password )
 
+        // const us = { _id : user._id , email : user.email ,
+        //     meta : user.meta }
+
+        // console.log("ouibdsuic :: " , us)
+        
         const token = createToken(user._id)
+
 
         return res.status(200).json({ email , token }) 
 
@@ -42,13 +48,10 @@ const signupUser = async(req, res) => {
     
     try { 
         const user = await User.signup(email , password)
-        console.log(`user : ${user._id}`)
 
         const token = createToken(user._id)
-        console.log(`user token created`)
-        console.log(token)
 
-        return res.status(200).json({ email , token }) 
+        return res.status(200).json({_id : user._id , email , token }) 
  
     }catch(err){
         
@@ -60,19 +63,17 @@ const signupUser = async(req, res) => {
 
 const getUserData = async (req, res) => {
 
-    console.log("reached")
-    console.log(req.body)
-
-    const { user } = req.body
 
     try { 
+        const { user } = req.body
 
-        console.log(user)
-        const data = User.findOne({ email : user.email })
+        console.log("user id : ", user.id)
 
-        console.log(data)
+        const ud = await  User.findById(user.id)
 
-        return res.status(200).json(data)
+        console.log("ud :: ", ud)
+
+        return res.status(200).json(ud)
     } catch (e) {
         console.log(e)
         return res.status(404).json({ error : e })
